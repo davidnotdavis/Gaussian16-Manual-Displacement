@@ -71,6 +71,8 @@ def MakeMDGjf(CalculationDetailsLine,GjfFileSuffix,Memory_given='4GB',Cores_give
                 outp.write (str(data.atomnos[i])+' '+"{:f}".format(summed[i][0])+' '+"{:f}".format(summed[i][1])+' '+"{:f}".format(summed[i][2])+'\n')
             outp.write("\n\n\n")
             outp.close
+            if DebugPrint:
+                print('New inputfile with manual displacement created for '+Imput+' in ./MDs dir')
 
         elif HasFreqs and data.vibfreqs[0]>0 and DebugPrint:
             print('No imag freq for '+Imput)
@@ -78,4 +80,4 @@ def MakeMDGjf(CalculationDetailsLine,GjfFileSuffix,Memory_given='4GB',Cores_give
             
 #Calls function with argumets specified at the beginning of this file;
 if UseAlone:
-    MakeMDGjf(Calcline,InputFileSuffix,Memory_given=Specified_Memory,Cores_given=Specified_Cores)    
+    MakeMDGjf(Calcline,InputFileSuffix,Memory_given=Specified_Memory,Cores_given=Specified_Cores,DebugPrint=PrintConsole)    
