@@ -38,6 +38,7 @@ def MakeMDGjf(CalculationDetailsLine,GjfFileSuffix,Memory_given='4GB',Cores_give
 
     for i in range(len(log_files)):
         NewFileSuffix=GjfFileSuffix+".gjf"
+        Imput = log_files[i] 
         f=open(Imput)#Opens Logfile and extracts coordinates, charge, and multiplicity
         parser = cclib.io.ccopen(Imput)
         data = parser.parse()
