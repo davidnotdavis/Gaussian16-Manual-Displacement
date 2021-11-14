@@ -16,6 +16,7 @@ Calcline='# opt freq 6-311+g(d,p) integral=grid=ultrafine pbe1pbe scf=(xqc,novar
 Specified_Memory='14GB'#Put specified memory including unit ('5GB','2000MB',...) in this string or leave empty ('') for 4GB default
 Specified_Cores='4'#Put specified cores ('2','3',...) in this string or leave empty ('') for 4 cores default 
 UseAlone=True #executes the function when this script is run, set to False if you want to run the function with another script
+PrintConsole=True #print result of every logfile check
 #--------------------------------------------------------------------------------------------------
 
 import datetime
@@ -43,12 +44,14 @@ def MakeMDGjf(CalculationDetailsLine,GjfFileSuffix,Memory_given='4GB',Cores_give
         parser = cclib.io.ccopen(Imput)
         data = parser.parse()
         HasFreqs=True #assume log has freqs
+        
         try:
             summed=np.add(data.vibdisps[0], data.atomcoords[-1])#add manual displacement to imag freq
         except:
             HasFreqs=False
             if DebugPrint:
                 print('Skipping '+Imput+' because it does not contain frequencies')
+                
         try:
             os.mkdir('./MDs')
         except:
@@ -72,9 +75,7 @@ def MakeMDGjf(CalculationDetailsLine,GjfFileSuffix,Memory_given='4GB',Cores_give
         elif HasFreqs and data.vibfreqs[0]>0 and DebugPrint:
             print('No imag freq for '+Imput)
 
- 
-#Calls function with argumets specified at the beginning of this file; feel free to get rid of these and 
-
+            
+#Calls function with argumets specified at the beginning of this file;
 if UseAlone:
     MakeMDGjf(Calcline,InputFileSuffix,Memory_given=Specified_Memory,Cores_given=Specified_Cores)    
-
